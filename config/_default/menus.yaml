@@ -17,5 +17,5 @@ main:
     pageRef: /cv/
     weight: 20
   - name: People
-    pageRef: lab/
+    pageRef: people/
     weight: 30
