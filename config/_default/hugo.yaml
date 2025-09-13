@@ -6,7 +6,7 @@
 # Website name
 title: Sechindra Vallury
 # Website URL
-baseURL: 'https://example.com/'
+baseURL: 'https://www.sechindravallury.com/'
 
 ############################
 ## LANGUAGE
@@ -55,3 +55,6 @@ security:
   _merge: deep
 sitemap:
   _merge: deep
+appearance:
+  theme: light        # default theme
+  day_night: false    # HIDE the day/night toggle in the UI

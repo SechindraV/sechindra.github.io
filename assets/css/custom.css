@@ -209,5 +209,14 @@ a.underline[href^="/research/"]:hover {
 /* Ensure the icon never clips inside the bubble */
 .h3-with-icon .icon-bubble svg { overflow: visible; }
 
-
-
+/* Remove light/dark toggle UI */
+.theme-toggle,
+.dark-mode-toggle,
+[data-theme-toggle],
+[data-wc-theme],
+.nav-item.theme-dropdown,
+.dropdown.theme-dropdown,
+a[aria-label*="theme" i],
+button[aria-label*="theme" i]{
+  display: none !important;
+}
