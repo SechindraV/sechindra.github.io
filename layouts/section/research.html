@@ -1,0 +1,40 @@
+{{ define "main" }}
+<main id="content" class="py-6">
+  <div class="container mx-auto max-w-5xl">
+   <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-2 justify-items-center">
+      {{ range .Pages.ByWeight }}
+        {{ $p := . }}
+        {{ $img := $p.Resources.GetMatch "featured.*" }}
+        <article class="card border rounded-2xl overflow-hidden w-full max-w-[520px]">
+          {{ with $img }}
+            {{/* Create crisp 1x and 2x crops for high-DPI screens */}}
+            {{ $thumb1x := .Fill "520x293 center" }}
+            {{ $thumb2x := .Fill "1040x586 center" }}
+            <a href="{{ $p.RelPermalink }}">
+              <img 
+                src="{{ $thumb1x.RelPermalink }}" 
+                srcset="{{ $thumb1x.RelPermalink }} 520w, {{ $thumb2x.RelPermalink }} 1040w"
+                sizes="(min-width: 640px) 520px, 100vw"
+                alt="{{ $p.Title }}" 
+                loading="lazy" 
+                width="520" height="293">
+              </img>
+            </a>
+          {{ end }}
+          <div class="card-body p-4">
+            <h3 class="text-xl font-semibold">
+              <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+            </h3>
+            {{ with $p.Summary }}
+              <div class="mt-2">{{ . | safeHTML }}</div>
+            {{ end }}
+            <div class="mt-3">
+              <a class="underline" href="{{ $p.RelPermalink }}">Read more →</a>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  </div>
+</main>
+{{ end }}

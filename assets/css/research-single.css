@@ -1,0 +1,56 @@
+/* ---------- Research single page hard overrides ---------- */
+
+/* Hide page title + meta (incl. reading time) */
+main .page-header,
+main h1,
+.page-metadata,
+.article-metadata,
+.article-meta,
+.time-to-read,
+[data-reading-time],
+[data-post-meta] { display: none !important; }
+
+/* Hide the featured/hero image wrapper so only your gallery shows */
+.article-header.featured-image-wrapper,
+.article-header .featured-image-wrapper,
+.featured-image-wrapper { display: none !important; }
+
+/* Hide author card/profile + social share widgets */
+.article-footer .authors,
+.article-footer .author-card,
+.article-footer .author,
+.article-footer [class*="author"],
+.article-footer .article-tags,
+.article-footer .share,
+.article-footer .share-box,
+.article-footer a[id^="share-link-"],
+#share, #article-share, #article-authors { display: none !important; }
+
+/* Always-visible Back-to-Research link (bottom-left) */
+a.back-to-research {
+  position: fixed; left: 1rem; bottom: 1rem; z-index: 60;
+  background: rgba(17, 24, 39, 0.92); color: #fff;
+  padding: 0.5rem 0.75rem; border-radius: 0.5rem; text-decoration: none;
+  font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+a.back-to-research:hover { opacity: .9; }
+
+/* Slightly wider container so the gallery breathes */
+body.section-research.single main .container,
+body.type-research.single main .container { max-width: 1100px; }
+
+/* Kill the auto-rendered H1 + “1 min read” metadata block */
+body.section-research.single header.page-header,
+body.type-research.single header.page-header,
+body.section-research.single .article-metadata,
+body.type-research.single .article-metadata,
+body.section-research.single .reading-time,
+body.type-research.single .reading-time {
+  display: none !important;
+}
+
+.share, .share-buttons, .article-share, .share-box,
+nav.page-nav, .article-nav, .pager, .pagination {
+  display: none !important;
+}
+

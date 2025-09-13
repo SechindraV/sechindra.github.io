@@ -1,0 +1,282 @@
+---
+title: "Lab"
+summary: ""
+show_title: false
+show_date: false
+show_reading_time: false
+show_word_count: false
+show_meta: false
+layout: "lab"
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+/* ---------- LAB PAGE (scoped) ---------- */
+.lab-scope { font-size: 1rem; }
+
+/* Page width — similar to Research/Teaching pages */
+.lab-container { max-width: 60rem; margin-inline: auto; padding-inline: 1rem; }
+
+/* Sections */
+.section { margin: 1rem 0 1.6rem 0; padding-top: .4rem; border-top: 2px solid rgba(0,0,0,.06); }
+.section:first-of-type { border-top: 0; padding-top: 0; }
+
+/* Use theme heading styles */
+.section-title.prose { max-width: none; }
+.section-title.prose h2 { margin: 0 0 .6rem 0; }
+
+/* Grid — 3-up desktop, 2-up tablet, 1-up phone; prevent neighbor stretch */
+.lab-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; align-items: start; }
+.lab-grid > * { align-self: start; }
+@media (max-width: 900px){ .lab-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px){ .lab-grid { grid-template-columns: 1fr; } }
+
+/* When a card is open, make it span 2 columns (desktop only) */
+@media (min-width: 901px){
+  .lab-grid > .lab-card:has(.lab-details[open]) { grid-column: span 2; } /* modern */
+  .lab-grid > .lab-card.is-open { grid-column: span 2; }                  /* fallback */
+}
+
+/* Card (closed) — vertical stack */
+.lab-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0,0,0,.03);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 14px;
+  overflow: hidden;                     /* prevents any image spillover */
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.lab-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.12); border-color: rgba(0,0,0,.10); }
+
+/* When OPEN on desktop — two columns: fixed media + flexible text */
+@media (min-width: 901px){
+  .lab-card:has(.lab-details[open]),
+  .lab-card.is-open{
+    display: grid;
+    grid-template-columns: 200px 1fr;  /* 200px media + flexible text */
+    column-gap: 1rem;
+    align-items: start;
+  }
+}
+
+/* Force sections to stack vertically even if a parent uses flex */
+.lab-scope .section{
+  display:block;
+  width:100%;
+  flex: 0 0 100%;
+  max-width:100%;
+  clear: both;
+}
+
+/* Media area — hard clamp to 200×200 always */
+.lab-photo {
+  position: relative;
+  width: 100%;
+  height: 200px;                        /* fixed height */
+  background: linear-gradient(135deg, rgba(59,130,246,.06), rgba(99,102,241,.06));
+  display: grid; place-items: center;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  overflow: hidden;
+}
+.lab-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none !important;
+  max-height: none !important;
+}
+@media (min-width: 901px){
+  .lab-card:has(.lab-details[open]) .lab-photo,
+  .lab-card.is-open .lab-photo{
+    width: 200px; height: 200px;
+    border-bottom: 0;
+    border-right: 1px solid rgba(0,0,0,.06);
+  }
+}
+
+/* Centered initials when no photo */
+.lab-photo.no-photo::before{
+  content: attr(data-initials);
+  position: absolute; inset: 0; margin: auto;
+  width: 96px; height: 96px; border-radius: 9999px;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+  color: rgba(0,0,0,.75); font-weight: 700; font-size: 1.25rem; letter-spacing: .02em;
+}
+
+/* Body */
+.lab-body { padding: .7rem .8rem .85rem; display: flex; flex-direction: column; gap: .5rem; }
+.lab-name { font-weight: 700; line-height: 1.2; font-size: 1rem; }
+.lab-degree-line { font-size: .9rem; color: rgba(0,0,0,.6); margin-top: -.25rem; }
+
+/* Accordions — Teaching look; text justified */
+.lab-details { margin-top: .35rem; border: 1px solid #d9e7ef; border-radius: 10px; background: #eaf6fb; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+.lab-details summary{
+  cursor: pointer; list-style: none;
+  font-weight: 600; font-size: 1.02rem;
+  padding: .32rem .6rem;
+  color: #256ea7;
+  display: flex; align-items: center; gap: .35rem;
+}
+.lab-details[open] summary { color: #0f172a; }
+.lab-details summary:hover { color: #0a5f8d; }
+.lab-details summary:focus { outline: none; box-shadow: 0 0 0 2px rgba(14,165,233,0.2); border-radius: 6px; }
+.lab-details summary::-webkit-details-marker { display: none; }
+.lab-details summary::before{
+  content: "+"; width: 1.25rem; text-align: center; font-weight: 700; color: #3aa0e6; filter: blur(.2px);
+}
+.lab-details[open] summary::before{ content: "−"; }
+.lab-details .content{
+  padding: .12rem .6rem .55rem .6rem;
+  font-size: .98rem;
+  line-height: 1.7;
+  color: inherit;
+  background: transparent;
+  border-radius: 0 0 10px 10px;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-wrap: pretty;
+}
+
+/* Neutralize any global prose media margins inside cards */
+.lab-scope :where(.lab-card img, .lab-card picture, .lab-card video) { margin: 0 !important; }
+</style>
+</head>
+<body>
+<div class="lab-scope">
+  <div class="lab-container">
+
+    <!-- ================= Current Students ================= -->
+    <div class="section">
+      <div class="section-title prose"><h2>Current Students</h2></div>
+      <div class="lab-grid">
+
+        <!-- WITH PHOTO -->
+        <article class="lab-card" data-name="Mackenzi Hallmark">
+          <div class="lab-photo">
+            <img src="students/mackenzi.png" alt="Photo of Mackenzi Hallmark" />
+          </div>
+          <div class="lab-body">
+            <div class="lab-name">Mackenzi Hallmark</div>
+            <div class="lab-degree-line">M.S. Ecology - Integrative Conservation & Sustainability</div>
+            <details class="lab-details">
+              <summary>About Mackenzi</summary>
+              <div class="content">
+                Mackenzi is broadly interested in freshwater conservation and bridging the gap
+                between conservation science and practice. She earned her B.S. in Biology from Virginia Tech in 2020.
+                Prior to beginning grad school, she gained a variety of research and conservation experience across the
+                Southeast US including amphibian conservation, feral hog population monitoring, and longleaf pine
+                ecosystem hydrology and wetland monitoring. While working as a research technician with the River Basin
+                Center monitoring the management and health of Georgia's two most imperiled rivers, she was inspired to
+                understand how human behaviors impact freshwater environments. Her research focuses on how information
+                resources influence farmer decision-making in a region home to endangered fish and mussel species and
+                streams impacted by surrounding agricultural land use.
+              </div>
+            </details>
+          </div>
+        </article>
+
+        <!-- No-photo template (kept for future use; does not render) -->
+        <template id="lab-card-no-photo">
+          <article class="lab-card" data-name="Full Name">
+            <div class="lab-photo">
+              <img src="" alt="Photo of Full Name" />
+            </div>
+            <div class="lab-body">
+              <div class="lab-name">Full Name</div>
+              <div class="lab-degree-line">Degree</div>
+              <details class="lab-details">
+                <summary>About Full Name</summary>
+                <div class="content">Brief bio here.</div>
+              </details>
+            </div>
+          </article>
+        </template>
+
+      </div><!-- ✅ close .lab-grid (Current Students) -->
+    </div><!-- ✅ close .section (Current Students) -->
+
+    <!-- ================= Alumni ================= -->
+    <div class="section">
+      <div class="section-title prose"><h2>Alums</h2></div>
+      <div class="lab-grid">
+
+        <article class="lab-card" data-name="Jonathan Parrish">
+          <div class="lab-photo">
+            <img src="students/jonathan.jpg" />
+          </div>
+          <div class="lab-body">
+            <div class="lab-name">Jonathan Parrish</div>
+            <div class="lab-degree-line">M.S. Ecology - Integrative Conservation & Sustainability, 2025</div>
+            <details class="lab-details">
+              <summary>About Jonathan</summary>
+              <div class="content">
+                Jonathan’s thesis examines inequalities in stormwater infrastructure management in Gwinnett County, Georgia. His work shows how inspection frequency and infrastructure age vary across Hispanic and Black communities, and assesses whether green infrastructure investments are likely to redress or reinforce these disparities in service and resilience.
+              </div>
+            </details>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Automatic monogram fallback for missing/broken images -->
+<script>
+(function () {
+  function initialsFromName(name) {
+    if (!name) return "NA";
+    name = name.replace(/\(.*?\)/g, "").trim();
+    const parts = name.split(/\s+/).filter(Boolean);
+    const chars = (parts[0]?.[0] || "") + (parts[1]?.[0] || "");
+    return (chars.toUpperCase() || (parts[0]?.slice(0,2).toUpperCase() || "NA"));
+  }
+
+  document.querySelectorAll(".lab-card").forEach(function(card){
+    const photo = card.querySelector(".lab-photo");
+    const img   = photo ? photo.querySelector("img") : null;
+    const nameEl = card.querySelector(".lab-name");
+    const declaredName = card.getAttribute("data-name") || (nameEl ? nameEl.textContent : "");
+
+    function showMonogram() {
+      if (!photo) return;
+      photo.classList.add("no-photo");
+      photo.setAttribute("data-initials", initialsFromName(declaredName));
+      if (img) img.style.display = "none";
+    }
+
+    if (!img) { showMonogram(); return; }
+    const src = (img.getAttribute("src") || "").trim();
+    if (!src) { showMonogram(); return; }
+    if (img.complete && typeof img.naturalWidth === "number" && img.naturalWidth === 0) { showMonogram(); return; }
+    img.addEventListener("error", function(){ showMonogram(); }, { once: true });
+  });
+})();
+</script>
+
+<!-- Fallback for browsers without :has() — toggles .is-open on the card -->
+<script>
+(function(){
+  document.querySelectorAll('.lab-card .lab-details').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      var card = d.closest('.lab-card');
+      if (!card) return;
+      if (d.open) { card.classList.add('is-open'); }
+      else { card.classList.remove('is-open'); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

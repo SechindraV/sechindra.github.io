@@ -1,0 +1,22 @@
+{{/* layouts/research/single.html */}}
+{{ define "main" }}
+  <article class="prose mx-auto">
+
+    {{ .Content }}
+
+    {{/* Keep the line ABOVE the row */}}
+    <hr class="my-6" />
+<nav class="flex justify-between items-center text-lg">
+  <a href="/research/" class="underline">← Research</a>
+  {{ with .PrevInSection }}
+    <a href="{{ .RelPermalink }}" class="underline">{{ .Title }} →</a>
+  {{ else }}
+    {{/* fallback: hardcode link to first project */}}
+    <a href="/research/equitable-pathways-agricultural-adaptation/" class="underline">Equitable Pathways to Agricultural Adaptation →</a>
+  {{ end }}
+</nav>
+
+
+
+  </article>
+{{ end }}

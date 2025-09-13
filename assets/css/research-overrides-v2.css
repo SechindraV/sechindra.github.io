@@ -1,0 +1,36 @@
+/* Research page hard overrides */
+
+/* Hide the section H1 ("Research") and any page header wrapper */
+body [data-page-section='research'] .page-header,
+body.section-research .page-header,
+main .page-header,
+main h1.text-5xl,
+main h1.text-4xl { display: none !important; }
+
+/* Force a 2×2 grid on desktop; keep 1 col on mobile */
+@media (min-width: 1024px) {
+  main .hb-collection .grid,
+  main .hb-collection .grid.grid-cols-1 { 
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Card media tidy */
+main .hb-collection .card .media,
+main .hb-collection .card .media img,
+main .hb-collection .card .media picture { 
+  aspect-ratio: 16 / 9; height: auto; object-fit: cover;
+}
+
+/* Nuke read-time & meta anywhere it appears (cards + details) */
+.hb-collection .card .article-metadata,
+.hb-collection .card .article-meta,
+.hb-collection .card [class*="reading"],
+.article-metadata, .article-meta, .page-metadata,
+.time-to-read, [data-reading-time], [data-post-meta] {
+  display: none !important;
+}
+
+:root { /* tweakable knobs */ }
+body.research-centered main .container { max-width: 64rem; } /* 1024px */
+body.research-centered main .card { max-width: 520px; }
