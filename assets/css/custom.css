@@ -85,12 +85,6 @@ body.type-research.single .featured-image-wrapper {
   display: none !important;
 }
 
-body, .prose, .not-prose {
-  font-family: inherit !important;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
 /* Trim extra space before the footer across the site */
 .home-section:last-of-type,
 .section:last-of-type {
@@ -219,4 +213,47 @@ a.underline[href^="/research/"]:hover {
 a[aria-label*="theme" i],
 button[aria-label*="theme" i]{
   display: none !important;
+}
+
+/* === One font + one size everywhere (match About) === */
+:root{
+  --sv-font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+             Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  --sv-size: 1.125rem;  /* ≈18px (About) */
+  --sv-leading: 1.75;   /* comfy line-height */
+}
+
+/* 1) Force family globally (no size change here) */
+html, body { font-family: var(--sv-font) !important; }
+
+/* 2) Anything using Tailwind Typography (.prose) = About size */
+:where(.prose){
+  font-size: var(--sv-size) !important;
+  line-height: var(--sv-leading) !important;
+  font-family: var(--sv-font) !important;
+}
+:where(.prose) p,
+:where(.prose) li { font-size: inherit !important; line-height: inherit !important; }
+
+/* 3) Research landing (the 4 tiles aren’t wrapped in .prose) */
+body.section-research:not(.single) .hb-collection .card .card-body,
+body.section-research:not(.single) .hb-collection .card .card-text {
+  font-size: var(--sv-size) !important;
+  line-height: var(--sv-leading) !important;
+  font-family: var(--sv-font) !important;
+}
+
+/* 4) Teaching & People lists (also not always .prose) */
+body.section-teaching .content,
+body.section-people   .content {
+  font-size: var(--sv-size) !important;
+  line-height: var(--sv-leading) !important;
+  font-family: var(--sv-font) !important;
+}
+
+/* 5) Just in case: cards/chips/meta text inherit the same family */
+.hb-collection .card,
+.card, .card-body, .card-text, .meta, .subtitle, small,
+.pill, .badge, button, .btn, input, select, textarea {
+  font-family: var(--sv-font) !important;
 }
