@@ -45,12 +45,10 @@ main .page-header,
 
 #cv-frame {
   width: 100% !important;
-  height: 80vh;
+  height: min(90vh, 1000px); /* flexible: safe on tablets + laptops */
   border: 1px solid rgba(0,0,0,.08);
   border-radius: 12px;
 }
-
-
 
 /* Narrower, more readable CV container */
 #cv-page .container { max-width: 980px; }
@@ -254,5 +252,55 @@ body.section-people   .content {
 .card, .card-body, .card-text, .meta, .subtitle, small,
 .pill, .badge, button, .btn, input, select, textarea {
   font-family: var(--sv-font) !important;
+}
+
+/* ===== ABOUT / BIOGRAPHY — tablets (iPad Mini/Air etc.) ===== */
+@media (min-width: 768px) and (max-width: 1000px){
+
+  /* two columns: narrow left for photo, fluid right for text */
+  #biography .grid.grid-cols-1.md\:grid-cols-12{
+    display: grid !important;
+    grid-template-columns: 320px 1fr !important;
+    grid-auto-rows: auto !important;
+    column-gap: 1rem !important;
+    align-items: start !important;
+  }
+
+  /* 1) PHOTO = column 1, row 1 */
+  #biography .md\:col-span-4{
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 2 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+  }
+  #biography .md\:col-span-4 img,
+  #biography .md\:col-span-4 picture img{
+    /* dynamic size: responds to width and height, with a cap */
+    width:  320px !important;
+    height: 320px !important;
+    object-fit: cover !important;
+    border-radius: 9999px !important;
+    display: block !important;
+  }
+
+  /* 2) TEXT = column 2, row 1 (stays BESIDE photo) */
+  #biography .md\:col-span-8{
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2 !important;
+    margin: 0 !important;          /* kill md:mb-12 etc. */
+    align-self: start !important;
+  }
+  #biography .md\:col-span-8 > *:first-child{ margin-top: 0 !important; }
+  #biography .md\:col-span-8 [class*="mb-"]{ margin-bottom: .25rem !important; }
+  #biography .md\:col-span-8 > .flex.items-center{ align-items: flex-start !important; }
+
+  /* 3) ICONS ROW = full width, row 2 */
+  #biography .md\:col-span-12{
+    grid-column: 1 / -1 !important;
+    grid-row: 2 / 3 !important;
+    margin: .5rem 0 .75rem !important;
+  }
 }
 
